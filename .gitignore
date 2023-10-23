@@ -3,3 +3,5 @@ docker.env
 ### Serverless ###
 # Ignore build directory
 .serverless
+/.bundle/
+/vendor/bundle
