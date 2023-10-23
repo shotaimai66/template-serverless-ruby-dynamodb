@@ -1,0 +1,79 @@
+service: serverless-ruby
+frameworkVersion: '3'
+
+package:
+  exclude:
+    - node_modules/**
+    - .dynamodb/**
+    - .serverless/**
+    - tests/**
+    - .coverage
+    - test/**
+    - spec/**
+    - docker-compose.yml
+    - Dockerfile
+    - package.json
+  include:
+    - api/**
+
+
+resources:
+  - ${file(./conf/resources/dynamodb.yml)}
+
+provider:
+  name: aws
+  region: ap-northeast-1
+  runtime: ruby3.2
+  timeout: 60 # in seconds
+  stage: ${opt:stage, self:custom.defaultStage}
+  environment: ${file(./conf/env/${self:provider.stage}.yml)}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 'dynamodb:*'
+          Resource: '*'
+
+plugins:
+  - serverless-ruby-package
+  - serverless-offline
+  - serverless-prune-plugin
+  - serverless-localstack
+
+custom:
+  defaultStage: local
+  serverless-offline:
+    port: 3000
+    host: 0.0.0.0
+  localstack:
+    host: http://localstack
+    edgePort: 4566
+    region: ap-northeast-1
+    stages:
+      - local
+
+functions:
+  get_users:
+    handler: api/handler.get_users
+    events:
+      - http:
+          path: /users
+          method: get
+  create_users:
+    handler: api/handler.create_users
+    events:
+      - http:
+          path: /users
+          method: post
+          request:
+            schema:
+              application/json:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                  user_name:
+                    type: string
+                required:
+                  - user_id
+                  - user_name

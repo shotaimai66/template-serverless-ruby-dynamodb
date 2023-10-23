@@ -1,0 +1,5 @@
+docker.env
+
+### Serverless ###
+# Ignore build directory
+.serverless

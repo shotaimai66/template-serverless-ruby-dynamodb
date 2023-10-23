@@ -1,0 +1,7 @@
+- docker compose build
+- docker compose up -d
+- docker compose exec sls bash --login
+
+- sh init.sh
+- sls offline start
+- curl localhost:3000/local/hello | jq
