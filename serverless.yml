@@ -53,6 +53,12 @@ custom:
       - local
 
 functions:
+  hello:
+    handler: api/handler.hello
+    events:
+      - http:
+          path: /hello
+          method: get
   get_users:
     handler: api/handler.get_users
     events:

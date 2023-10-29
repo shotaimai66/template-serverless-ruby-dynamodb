@@ -9,7 +9,7 @@ ENV AWSCLI_VERSION=1.18.219
 RUN yum -y update
 RUN yum install -y wget tar xz git gcc-c++ make \
  libssl-dev zlib zlib1g-dev zlib-devel bzip2 bzip2-devel readline-devel \
- openssl-devel which libffi-devel libyaml-devel \
+ openssl-devel which libffi-devel libyaml-devel unzip \
 
 WORKDIR ${WORKDIR}
 
@@ -30,6 +30,10 @@ RUN echo 'export LANG=C.UTF-8' >> ~/.bash_profile
 RUN echo 'export LANGUAGE=en_US:' >> ~/.bash_profile
 RUN echo 'export RUBYPATH="${WORKDIR}:$RUBYPATH"' >> ~/.bash_profile
 RUN yarn global add serverless
-RUN bundle install --path vendor/bundle
+
+# Install awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install
 
 EXPOSE 3000

@@ -1,6 +1,19 @@
+# https://www.serverless.com/plugins/serverless-ruby-package
 load "vendor/bundle/bundler/setup.rb"
 require 'json'
 require 'aws-sdk-dynamodb'
+
+def hello(event:, context:)
+  {
+    statusCode: 200,
+    body: JSON.generate(
+      {
+        event: event,
+        context: context,
+      }
+    )
+  }
+end
 
 def get_users(event:, context:)
    response = dynamo_db_client.scan(table_name: table_name)

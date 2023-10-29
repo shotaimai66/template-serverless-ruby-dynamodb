@@ -8,5 +8,6 @@
     "serverless-offline": "^13.2.0",
     "serverless-prune-plugin": "^2.0.2",
     "serverless-ruby-package": "^3.2.0"
-  }
+  },
+  "repository": "git@github.com:shotaimai66/template-serverless-ruby-dynamodb.git"
 }
