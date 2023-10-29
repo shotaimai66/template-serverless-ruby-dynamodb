@@ -5,3 +5,4 @@ docker.env
 .serverless
 /.bundle/
 /vendor/bundle
+/node_modules

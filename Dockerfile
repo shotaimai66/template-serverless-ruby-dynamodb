@@ -30,4 +30,6 @@ RUN echo 'export LANG=C.UTF-8' >> ~/.bash_profile
 RUN echo 'export LANGUAGE=en_US:' >> ~/.bash_profile
 RUN echo 'export RUBYPATH="${WORKDIR}:$RUBYPATH"' >> ~/.bash_profile
 RUN yarn global add serverless
+RUN bundle install --path vendor/bundle
+
 EXPOSE 3000
